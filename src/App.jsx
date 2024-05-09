@@ -20,26 +20,24 @@ export const App = () => {
   const [good, setGood] = useState('Jam');
 
   function deleteGood() {
-    setGood(null);
+    setGood(false);
   }
 
   return (
     <main className="section container">
-      {good === null ? (
-        <h1 className="title is-flex is-align-items-center">
-          No goods selected
-        </h1>
-      ) : (
+      {good ? (
         <h1 className="title is-flex is-align-items-center">
           {good} is selected
           <button
             data-cy="ClearButton"
             type="button"
             className="delete ml-3"
-            onClick={() => {
-              deleteGood();
-            }}
+            onClick={deleteGood}
           />
+        </h1>
+      ) : (
+        <h1 className="title is-flex is-align-items-center">
+          No goods selected
         </h1>
       )}
 
@@ -47,6 +45,7 @@ export const App = () => {
         <tbody>
           {goods.map(goodFromArr => (
             <tr
+              key={goodFromArr}
               data-cy="Good"
               className={classNames({
                 'has-background-success-light': goodFromArr === good,
@@ -58,9 +57,7 @@ export const App = () => {
                     data-cy="RemoveButton"
                     type="button"
                     className="button is-info"
-                    onClick={() => {
-                      deleteGood();
-                    }}
+                    onClick={deleteGood}
                   >
                     -
                   </button>
